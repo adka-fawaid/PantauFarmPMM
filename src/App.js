@@ -3,18 +3,21 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Chatbot from './components/Chatbot';
+import Login from './components/Login';
 import './App.css';
 import './styles/responsive.css';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeMenu, setActiveMenu] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleMenuChange = (menuId) => {
-    setActiveMenu(menuId);
     if (menuId === 'logout') {
-      // Handle logout logic here
+      setIsLoggedIn(false);
       console.log('Logout clicked');
+    } else {
+      setActiveMenu(menuId);
     }
   };
 
@@ -30,6 +33,17 @@ function App() {
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
+
+  const handleLoginSuccess = (credentials) => {
+    // Set user as logged in and navigate to dashboard
+    setIsLoggedIn(true);
+    setActiveMenu('dashboard');
+    console.log('User logged in:', credentials.email);
+  };
+
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLoginSuccess} />;
+  }
 
   return (
     <div className="App">

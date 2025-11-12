@@ -6,3 +6,4 @@ export { default as ChartCard } from './ChartCard';
 export { default as NotificationBell } from './NotificationBell';
 export { default as LoadingSpinner } from './LoadingSpinner';
 export { default as Chatbot } from './Chatbot';
+export { default as Login } from './Login';
