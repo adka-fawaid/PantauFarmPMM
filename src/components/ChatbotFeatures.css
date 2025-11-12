@@ -1,0 +1,229 @@
+/* ChatBot Features Styling */
+
+.sensor-data-card {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.sensor-data-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sensor-icon {
+  font-size: 18px;
+}
+
+.sensor-data-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0c4a6e;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.sensor-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sensor-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.sensor-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0c4a6e;
+}
+
+/* AI Recommendation */
+.ai-recommendation {
+  background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+  border: 1px solid #fcd34d;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.recommendation-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.recommendation-icon {
+  font-size: 18px;
+}
+
+.recommendation-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.recommendation-content {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #78350f;
+}
+
+.recommendation-action {
+  background: #f59e0b;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.recommendation-action:hover {
+  background: #d97706;
+}
+
+/* Mini Chart */
+.mini-chart {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.chart-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.chart-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.chart-svg {
+  width: 100%;
+  max-width: 200px;
+  height: 60px;
+}
+
+/* Farming Tip */
+.farming-tip {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.tip-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tip-icon {
+  font-size: 18px;
+}
+
+.tip-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #166534;
+}
+
+.tip-content {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #14532d;
+}
+
+.tip-footer {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #bbf7d0;
+}
+
+.tip-category {
+  font-size: 11px;
+  color: #16a34a;
+  font-weight: 500;
+}
+
+/* Responsive Design for Chat Features */
+@media (max-width: 768px) {
+  .sensor-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  
+  .sensor-data-card,
+  .ai-recommendation,
+  .farming-tip {
+    padding: 12px;
+    margin: 6px 0;
+  }
+  
+  .sensor-data-header h4,
+  .recommendation-header h4,
+  .tip-header h4 {
+    font-size: 13px;
+  }
+  
+  .recommendation-content,
+  .tip-content {
+    font-size: 12px;
+  }
+  
+  .chart-svg {
+    max-width: 160px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sensor-data-card,
+  .ai-recommendation,
+  .farming-tip {
+    padding: 10px;
+  }
+  
+  .mini-chart {
+    padding: 8px;
+  }
+  
+  .chart-svg {
+    max-width: 140px;
+    height: 40px;
+  }
+}

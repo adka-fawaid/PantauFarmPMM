@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
+import Chatbot from './components/Chatbot';
 import './App.css';
 import './styles/responsive.css';
 
@@ -47,7 +48,7 @@ function App() {
           <div className="content-area">
             {activeMenu === 'dashboard' && <Dashboard />}
             {activeMenu === 'monitoring' && <div className="placeholder">Monitoring Page</div>}
-            {activeMenu === 'users' && <div className="placeholder">Users Page</div>}
+            {activeMenu === 'chatbot' && <Chatbot />}
           </div>
         </div>
       </div>
