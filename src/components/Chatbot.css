@@ -1,6 +1,6 @@
 /* Chatbot Page Wrapper */
 .chatbot-page {
-  padding: 0;
+  padding: 30px;
   background: #f8fafc;
   min-height: calc(100vh - 140px);
 }
@@ -8,7 +8,7 @@
 .chatbot-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 180px);
+  height: calc(100vh - 200px);
   margin: 0;
   padding: 0 20px;
   background: white;
@@ -80,6 +80,22 @@
 .chatbot-controls {
   display: flex;
   gap: 8px;
+  align-items: center;
+}
+
+.message-counter {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .control-btn {

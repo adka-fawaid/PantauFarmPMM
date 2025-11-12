@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import NotificationBell from './NotificationBell';
 import { useScreenSize } from '../hooks/useScreenSize';
 import './Header.css';
 import '../styles/header-utilities.css';
 
-const Header = ({ onAction, onMenuToggle, onLogout }) => {
+const Header = ({ onAction, onMenuToggle, onLogout, sidebarCollapsed }) => {
   const { isMobile, isTablet } = useScreenSize();
   const [showNotification, setShowNotification] = useState(true);
+  const [isAutoMode, setIsAutoMode] = useState(false);
+  const [isManualActive, setIsManualActive] = useState(false);
+  const [showWateringModal, setShowWateringModal] = useState(false);
+  const [wateringDuration, setWateringDuration] = useState(5);
+  const [remainingTime, setRemainingTime] = useState(0);
+  const timerRef = useRef(null);
   
   const currentDate = new Date().toLocaleDateString('id-ID', {
     weekday: isMobile ? 'short' : 'long',
@@ -21,13 +27,85 @@ const Header = ({ onAction, onMenuToggle, onLogout }) => {
     setShowNotification(false);
   };
 
+  const handleAutoMode = () => {
+    if (!isManualActive) {
+      setIsAutoMode(!isAutoMode);
+      onAction(isAutoMode ? 'disable-auto' : 'enable-auto');
+    }
+  };
+
+  const handleManualWatering = () => {
+    if (isManualActive) {
+      // Stop manual watering
+      setIsManualActive(false);
+      setRemainingTime(0);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      onAction('stop-manual-watering');
+    } else if (!isAutoMode) {
+      // Start manual watering modal
+      setShowWateringModal(true);
+    }
+  };
+
+  const startManualWatering = () => {
+    setShowWateringModal(false);
+    setIsManualActive(true);
+    setRemainingTime(wateringDuration * 60); // Convert to seconds
+    
+    // Disable auto mode if it was on
+    if (isAutoMode) {
+      setIsAutoMode(false);
+    }
+    
+    // Start countdown timer
+    timerRef.current = setInterval(() => {
+      setRemainingTime(prev => {
+        if (prev <= 1) {
+          // Timer finished, stop watering
+          setIsManualActive(false);
+          clearInterval(timerRef.current);
+          onAction('auto-stop-manual-watering');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    onAction('start-manual-watering', { duration: wateringDuration });
+  };
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const closeModal = () => {
+    setShowWateringModal(false);
+  };
+
   return (
     <div className="header">
       {/* Top section with logo and date/time */}
       <div className="header-top">
         <div className="header-brand">
-          <button className="menu-toggle" onClick={onMenuToggle}>
-            ☰
+          <button 
+            className="menu-toggle" 
+            onClick={onMenuToggle}
+            title={isMobile ? 'Toggle Menu' : (sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar')}
+          >
+            {isMobile ? '☰' : (sidebarCollapsed ? '▶️' : '◀️')}
           </button>
           <div className="logo-section">
             <span className="brand-name">Monitoring</span>
@@ -61,32 +139,113 @@ const Header = ({ onAction, onMenuToggle, onLogout }) => {
       {/* Action buttons */}
       <div className="header-actions">
         <button 
-          className="action-btn btn-orange"
-          onClick={() => onAction('reports')}
+          className={`action-btn ${isAutoMode ? 'btn-green active' : 'btn-green'} ${isManualActive ? 'disabled' : ''}`}
+          onClick={handleAutoMode}
+          disabled={isManualActive}
         >
           <span className="btn-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 7C14.8 7 17 9.2 17 12V15H20V17H4V15H7V12C7 9.2 9.2 7 12 7ZM9 12V15H15V12C15 10.3 13.7 9 12 9S9 10.3 9 12Z"/>
+              <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>
             </svg>
           </span>
           <span className="btn-text">
-            {isMobile ? 'Hentikan Penyiraman' : 'Hentikan Penyiraman'}
+            {isAutoMode ? 'Mode Otomatis ON' : 'Automatis'}
           </span>
         </button>
         <button 
-          className="action-btn btn-blue"
-          onClick={() => onAction('stream')}
+          className={`action-btn ${isManualActive ? 'btn-red active' : 'btn-blue'} ${isAutoMode ? 'disabled' : ''}`}
+          onClick={handleManualWatering}
+          disabled={isAutoMode}
         >
           <span className="btn-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 20C12.6 20 13 20.4 13 21C13 21.6 12.6 22 12 22C11.4 22 11 21.6 11 21C11 20.4 11.4 20 12 20ZM6 10.5C6 12.7 7.3 14 9.5 14S13 12.7 13 10.5S11.7 7 9.5 7S6 8.3 6 10.5ZM14.5 17C16.7 17 18 15.7 18 13.5S16.7 10 14.5 10S11 11.3 11 13.5S12.3 17 14.5 17Z"/>
-            </svg>
+            {isManualActive ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16,8A8,8 0 0,1 8,16H16M16,16V8M8,8A8,8 0 0,1 16,16H8M8,16V8"/>
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,18A6,6 0 0,1 6,12C6,10 8,7.75 12,3.5C16,7.75 18,10 18,12A6,6 0 0,1 12,18M12,2C7.5,7 4,10.61 4,14A8,8 0 0,0 20,14C20,10.61 16.5,7 12,2Z"/>
+              </svg>
+            )}
           </span>
           <span className="btn-text">
-            {isMobile ? 'Atur Waktu Siram' : 'Atur Waktu Siram'}
+            {isManualActive ? (
+              <span>
+                Siram Aktif
+                {remainingTime > 0 && (
+                  <small style={{display: 'block', fontSize: '0.8em', opacity: 0.9}}>
+                    {formatTime(remainingTime)}
+                  </small>
+                )}
+              </span>
+            ) : 'Manual Siram'}
           </span>
         </button>
       </div>
+
+      {/* Watering Duration Modal */}
+      {showWateringModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Pengaturan Penyiraman Manual</h3>
+              <button className="modal-close" onClick={closeModal}>×</button>
+            </div>
+            <div className="modal-body">
+              <div className="form-group">
+                <label htmlFor="duration">Durasi Penyiraman (menit):</label>
+                <input
+                  type="number"
+                  id="duration"
+                  min="1"
+                  max="60"
+                  value={wateringDuration}
+                  onChange={(e) => setWateringDuration(Number(e.target.value))}
+                  className="duration-input"
+                />
+                <div className="duration-presets">
+                  <button 
+                    className={`preset-btn ${wateringDuration === 2 ? 'active' : ''}`}
+                    onClick={() => setWateringDuration(2)}
+                  >
+                    2 min
+                  </button>
+                  <button 
+                    className={`preset-btn ${wateringDuration === 5 ? 'active' : ''}`}
+                    onClick={() => setWateringDuration(5)}
+                  >
+                    5 min
+                  </button>
+                  <button 
+                    className={`preset-btn ${wateringDuration === 10 ? 'active' : ''}`}
+                    onClick={() => setWateringDuration(10)}
+                  >
+                    10 min
+                  </button>
+                  <button 
+                    className={`preset-btn ${wateringDuration === 15 ? 'active' : ''}`}
+                    onClick={() => setWateringDuration(15)}
+                  >
+                    15 min
+                  </button>
+                </div>
+              </div>
+              <div className="watering-info">
+                <p>💧 Sistem akan menyiram selama <strong>{wateringDuration} menit</strong></p>
+                <p>🌱 Pastikan level air mencukupi sebelum memulai</p>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn-cancel" onClick={closeModal}>
+                Batal
+              </button>
+              <button className="btn-start" onClick={startManualWatering}>
+                🚿 Mulai Siram
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

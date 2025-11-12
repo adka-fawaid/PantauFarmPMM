@@ -1,6 +1,6 @@
 /* Users Page Wrapper */
 .users-page {
-  padding: 0;
+  padding: 30px;
   background: #f8fafc;
   min-height: calc(100vh - 140px);
 }
@@ -8,7 +8,7 @@
 /* Users Component Styles */
 .users-container {
   margin: 0;
-  padding: 0 20px;
+  padding: 0;
 }
 
 /* Header Section */

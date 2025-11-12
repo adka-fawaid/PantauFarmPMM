@@ -1,0 +1,175 @@
+/* ===== LAYOUT ALIGNMENT FIX ===== */
+/* Ensures consistent padding and alignment across all components */
+
+/* Base variables for consistent spacing */
+:root {
+  --container-padding-x: 30px;
+  --container-padding-x-tablet: 20px;
+  --container-padding-x-mobile: 16px;
+}
+
+/* Global container alignment */
+.container-aligned {
+  padding-left: var(--container-padding-x);
+  padding-right: var(--container-padding-x);
+}
+
+/* Ensure all main components have consistent horizontal padding */
+.dashboard,
+.chatbot-page,
+.users-page {
+  padding-left: var(--container-padding-x) !important;
+  padding-right: var(--container-padding-x) !important;
+}
+
+/* Header components alignment */
+.header-top,
+.header-actions,
+.notification-banner {
+  padding-left: var(--container-padding-x) !important;
+  padding-right: var(--container-padding-x) !important;
+}
+
+/* Fix chatbot container to not override padding */
+.chatbot-container {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Fix users container to not override padding */
+.users-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ===== RESPONSIVE ALIGNMENT ===== */
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .dashboard,
+  .chatbot-page,
+  .users-page {
+    padding-left: var(--container-padding-x-tablet) !important;
+    padding-right: var(--container-padding-x-tablet) !important;
+  }
+  
+  .header-top,
+  .header-actions,
+  .notification-banner {
+    padding-left: var(--container-padding-x-tablet) !important;
+    padding-right: var(--container-padding-x-tablet) !important;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .dashboard,
+  .chatbot-page,
+  .users-page {
+    padding-left: var(--container-padding-x-mobile) !important;
+    padding-right: var(--container-padding-x-mobile) !important;
+  }
+  
+  .header-top,
+  .header-actions,
+  .notification-banner {
+    padding-left: var(--container-padding-x-mobile) !important;
+    padding-right: var(--container-padding-x-mobile) !important;
+  }
+}
+
+/* ===== EDGE-TO-EDGE ALIGNMENT ===== */
+
+/* Ensure all containers start and end at the same position */
+.aligned-container {
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* Remove any conflicting margins */
+.dashboard *,
+.chatbot-page *,
+.users-page * {
+  box-sizing: border-box;
+}
+
+/* Ensure grid containers align properly */
+.metrics-grid,
+.charts-section,
+.users-stats,
+.users-table {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Fix any button or control alignment */
+.add-user-btn,
+.action-btn,
+.control-btn {
+  box-sizing: border-box;
+}
+
+/* ===== VISUAL DEBUGGING (TEMPORARY) ===== */
+
+/* Uncomment to see alignment boundaries 
+.dashboard,
+.chatbot-page,
+.users-page,
+.header-top,
+.header-actions,
+.notification-banner {
+  outline: 1px solid rgba(255, 0, 0, 0.3);
+}
+*/
+
+/* ===== CONTENT AREA FIXES ===== */
+
+/* Ensure content area doesn't have conflicting padding */
+.content-area {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Fix any wrapper containers */
+.main-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure sidebar doesn't affect main content alignment */
+.app-container {
+  align-items: stretch;
+}
+
+/* ===== SCROLLBAR ALIGNMENT ===== */
+
+/* Ensure scrollbars don't affect alignment */
+.content-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* ===== FINAL OVERRIDES ===== */
+
+/* Force consistent alignment for all major sections */
+.header,
+.dashboard,
+.chatbot-page,
+.users-page {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Prevent any component from breaking alignment */
+* {
+  max-width: 100%;
+}

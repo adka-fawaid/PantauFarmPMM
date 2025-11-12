@@ -1,15 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Chatbot.css';
 
-const Chatbot = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      type: 'bot',
-      content: 'Halo! Saya adalah AI Assistant untuk sistem monitoring pertanian Anda. Bagaimana saya bisa membantu Anda hari ini?',
-      timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-    }
-  ]);
+const Chatbot = ({ messages, setMessages }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -111,14 +103,17 @@ const Chatbot = () => {
   ];
 
   const clearChat = () => {
-    setMessages([
+    const newMessages = [
       {
-        id: 1,
+        id: Date.now(),
         type: 'bot',
         content: 'Chat telah dibersihkan. Bagaimana saya bisa membantu Anda?',
         timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
       }
-    ]);
+    ];
+    setMessages(newMessages);
+    // Also clear from localStorage
+    localStorage.removeItem('chatHistory');
   };
 
   return (
@@ -132,10 +127,18 @@ const Chatbot = () => {
           </div>
           <div className="bot-details">
             <h3 className="bot-name">AI Farm Assistant</h3>
-            <p className="bot-description">Asisten pintar untuk monitoring pertanian</p>
+            <p className="bot-description">
+              {messages.length > 1 ? 
+                `${messages.length - 1} pesan dalam riwayat chat` : 
+                'Asisten pintar untuk monitoring pertanian'
+              }
+            </p>
           </div>
         </div>
         <div className="chatbot-controls">
+          {messages.length > 1 && (
+            <span className="message-counter">{messages.length - 1}</span>
+          )}
           <button className="control-btn" onClick={clearChat} title="Clear Chat">
             🗑️
           </button>
