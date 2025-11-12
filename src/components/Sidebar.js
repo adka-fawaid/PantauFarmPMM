@@ -3,8 +3,7 @@ import './Sidebar.css';
 
 const Sidebar = ({ activeMenu, onMenuChange, isOpen, onClose }) => {
   const menuItems = [
-    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
-    { id: 'monitoring', icon: '📈', label: 'Monitoring' },
+    { id: 'dashboard', icon: '📊', label: 'Dashboard Monitoring' },
     { id: 'users', icon: '👥', label: 'Users' },
     { id: 'logout', icon: '🚪', label: 'Logout' }
   ];

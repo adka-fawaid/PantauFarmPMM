@@ -1,0 +1,153 @@
+/* Header Responsive Utilities */
+
+/* Flexbox utilities for header components */
+.header-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header-flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Text utilities for responsive text */
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-center-mobile {
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .text-center-mobile {
+    text-align: center;
+  }
+}
+
+/* Spacing utilities for consistent gaps */
+.gap-xs { gap: 4px; }
+.gap-sm { gap: 8px; }
+.gap-md { gap: 12px; }
+.gap-lg { gap: 16px; }
+.gap-xl { gap: 20px; }
+
+/* Responsive padding utilities */
+.p-responsive {
+  padding: 20px 30px;
+}
+
+@media (max-width: 1024px) {
+  .p-responsive {
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .p-responsive {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .p-responsive {
+    padding: 10px 12px;
+  }
+}
+
+/* Button responsive utilities */
+.btn-responsive {
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .btn-responsive {
+    padding: 12px 16px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-responsive {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Hide/show utilities for responsive design */
+.desktop-only {
+  display: block;
+}
+
+.tablet-only {
+  display: none;
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .tablet-only {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .tablet-only {
+    display: none;
+  }
+  
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Container max-width utilities */
+.container-fluid {
+  width: 100%;
+  max-width: none;
+}
+
+.container-responsive {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 1400px) {
+  .container-responsive {
+    max-width: 1320px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
