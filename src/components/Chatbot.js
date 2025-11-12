@@ -122,7 +122,8 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="chatbot-container">
+    <div className="chatbot-page">
+      <div className="chatbot-container">
       <div className="chatbot-header">
         <div className="chatbot-info">
           <div className="bot-avatar">
@@ -137,9 +138,6 @@ const Chatbot = () => {
         <div className="chatbot-controls">
           <button className="control-btn" onClick={clearChat} title="Clear Chat">
             🗑️
-          </button>
-          <button className="control-btn" title="Settings">
-            ⚙️
           </button>
         </div>
       </div>
@@ -240,6 +238,7 @@ const Chatbot = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
